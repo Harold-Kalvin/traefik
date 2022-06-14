@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v2.7
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Traefik can listen to the Docker events
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=http"
+
+networks:
+  traefik-network:
+    name: traefik-network
