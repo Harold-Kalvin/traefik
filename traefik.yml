@@ -7,7 +7,19 @@ entryPoints:
 providers:
   providersThrottleDuration: 2s
   docker:
-    watch: true
     exposedByDefault: false
+    watch: true
+  file:
+    filename: "/etc/traefik/dynamic.yml"
+    watch: true
 
 accessLog: {}
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      email: YOUR_EMAIL
+      storage: /letsencrypt/acme.json
+      httpchallenge:
+        entrypoint: http
